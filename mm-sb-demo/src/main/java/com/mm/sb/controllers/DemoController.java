@@ -19,7 +19,7 @@ import com.mm.sb.model.Employee;
  */
 //@Controller
 @RestController
-@RequestMapping("/demo")
+@RequestMapping("/employees")
 public class DemoController {
 
 	List<Employee> employeesList;
@@ -38,7 +38,7 @@ public class DemoController {
 		return new Date(System.currentTimeMillis()).toString();
 	}
 	
-	@GetMapping("/employees")
+	@GetMapping("/list")
 	public List<Employee> showAllEmployees(){
 		return employeesList;
 	} 
