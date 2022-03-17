@@ -15,4 +15,12 @@ public interface MoviesService {
 
 	List<Movie> listMovies();
 
+	Movie findMovieById(Long movieId);
+
+	Movie addMovie(Movie movie);
+
+	Movie modifyMoview(Movie movie);
+
+	Boolean deleteMovie(Long movieId);
+
 }

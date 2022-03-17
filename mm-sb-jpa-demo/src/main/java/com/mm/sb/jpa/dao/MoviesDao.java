@@ -15,4 +15,12 @@ public interface MoviesDao {
 
 	List<Movie> listMovies();
 
+	Movie findMovieById(Long movieId);
+
+	Movie addMovie(Movie movie);
+
+	Movie modifyMovie(Movie movie);
+
+	Boolean deleteMovie(Long movieId);
+
 }

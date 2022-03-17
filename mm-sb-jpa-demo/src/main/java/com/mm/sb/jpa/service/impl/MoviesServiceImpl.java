@@ -27,4 +27,24 @@ public class MoviesServiceImpl implements MoviesService {
 		return moviesDao.listMovies();
 	}
 
+	@Override
+	public Movie findMovieById(Long movieId) {
+		return moviesDao.findMovieById(movieId);
+	}
+
+	@Override
+	public Movie addMovie(Movie movie) {
+		return moviesDao.addMovie(movie);
+	}
+
+	@Override
+	public Movie modifyMoview(Movie movie) {
+		return moviesDao.modifyMovie(movie);
+	}
+
+	@Override
+	public Boolean deleteMovie(Long movieId) {
+		return moviesDao.deleteMovie(movieId);
+	}
+
 }

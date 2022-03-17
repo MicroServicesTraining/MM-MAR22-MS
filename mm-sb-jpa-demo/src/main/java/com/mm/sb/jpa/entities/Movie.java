@@ -26,7 +26,7 @@ public class Movie implements Serializable{
 	 */
 	private static final long serialVersionUID = -4555471596598973751L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", length = 10)
 	private Long id;
 	
