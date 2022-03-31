@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-public class OnlineShoppingController {
+@RequestMapping("/sellers")
+public class SellerController {
+
 	@GetMapping
-	public String showHomePage() {
-		return "<h1>Welcome To Online Shoppe</h1>";
+	public String getSellerHomePage() {
+		return "<h1>Welcome Seller</h1>";
 	}
 }
