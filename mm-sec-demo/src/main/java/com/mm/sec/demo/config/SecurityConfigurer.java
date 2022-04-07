@@ -3,13 +3,16 @@
  */
 package com.mm.sec.demo.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -19,12 +22,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
-	
+	@Autowired
+	private DataSource dataSource;
+
 	@Bean 
+	public PasswordEncoder getPasswordEncoder() {
+		return NoOpPasswordEncoder.getInstance();
+	}
+
+	
+	/*@Bean 
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+*/
 	/* (non-Javadoc)
 	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder)
 	 */
@@ -46,11 +57,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 		.and().withUser("raju").password("$2a$10$0x4jfxkbXjFA.S1S1F5qW.I5J67tjedVUcvSHT0UWZudr6hS91oGq").roles("CUSTOMER")
 		.and().passwordEncoder(new BCryptPasswordEncoder());*/
 		
-		auth.inMemoryAuthentication()
+		/*auth.inMemoryAuthentication()
 		.withUser("sekhar").password("$2a$10$VbxxxM7ukaey/vs6Rp2sc.H3sgOBJxQDZnEL7yN8BXfG5IVonAfYW").roles("ADMIN")
-		.and().withUser("ravi").password("$2a$10$.T/XGuVSFa8jFvEE0C3DgOzs9niLd7xWrKfIO1VvyT8OIEo74xa0e").roles("SELLER")
+		.and().withUser("ravi").password("$2a$10$.T/XGuVSFa8jFvEE0C3DgOzs9niLd7xWrKfIO1VvyT8OIEo74xa0e").roles("SELLER", "CUSTOMER")
+		.and().withUser("mahesh").password("$2a$10$.T/XGuVSFa8jFvEE0C3DgOzs9niLd7xWrKfIO1VvyT8OIEo74xa0e").roles("SELLER")
 		.and().withUser("raju").password("$2a$10$0x4jfxkbXjFA.S1S1F5qW.I5J67tjedVUcvSHT0UWZudr6hS91oGq").roles("CUSTOMER");
-	
+	*/
+		
+		auth.jdbcAuthentication()
+		.dataSource(dataSource)
+		.usersByUsernameQuery("select name, password, active from user where name = ?")
+		.authoritiesByUsernameQuery("select name, role from user where name = ?");
+		
 	}
 
 	/* (non-Javadoc)
@@ -60,11 +78,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/admins").hasRole("ADMIN")
-		.antMatchers("/sellers").hasRole("SELLER")
-		.antMatchers("/customers").hasRole("CUSTOMER")
+		.antMatchers("/admins").hasRole("admin")
+		.antMatchers("/sellers").hasAnyRole("seller", "admin")
+		.antMatchers("/customers").hasAnyRole("customer", "seller", "admin")
 		.and()
-		.formLogin().permitAll();
+		.formLogin().loginPage("/login").permitAll()
+		.and()
+		.logout().permitAll();
 	}
 	
 }
