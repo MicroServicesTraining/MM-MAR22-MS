@@ -3,7 +3,6 @@
  */
 package com.mm.jp.util;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -13,25 +12,33 @@ import org.springframework.context.annotation.PropertySources;
  * @author dorak
  *
  */
-
 @Configuration
 @PropertySources({
-	//@PropertySource("classpath:jobportalconfig.properties")
+	@PropertySource("classpath:jobportalconfig.properties")
 	//@PropertySource("file:D:\\OnlineClass\\Mindmajix\\jobportalconfig.properties")
 })
-@ConfigurationProperties( prefix = "jobportal" )
-public class JobPortalPropsUtil {
-	
-	//@Value("${title}")
+@ConfigurationProperties(prefix = "jobportal")
+public class JobPortalProperties {
+/*	@Value("${jobportal.title}")
 	private String title;
+	@Value("${jobportal.admin}")
+	private String admin;
+	@Value("${jobportal.phone}")
+	private String phone;
+	@Value("${jobportal.jobsMaxLimit}")
+	private String jobsMaxLimit;
+	@Value("${jobportal.jobseekersMaxLimit}")
+	private String jobseekersMaxLimit;
+	@Value("${jobportal.fee}")
+	private String fee;*/
 	
-	@Value("${jobportal.title}")
-	private String jobPortalTitle;
+	private String title;
 	private String admin;
 	private String phone;
-	private Integer jobsMaxLimit;
-	private Integer jobseekersMaxLimit;
-	private Double fee;
+	private String jobsMaxLimit;
+	private String jobseekersMaxLimit;
+	private String fee;
+	
 	/**
 	 * @return the title
 	 */
@@ -71,50 +78,38 @@ public class JobPortalPropsUtil {
 	/**
 	 * @return the jobsMaxLimit
 	 */
-	public Integer getJobsMaxLimit() {
+	public String getJobsMaxLimit() {
 		return jobsMaxLimit;
 	}
 	/**
 	 * @param jobsMaxLimit the jobsMaxLimit to set
 	 */
-	public void setJobsMaxLimit(Integer jobsMaxLimit) {
+	public void setJobsMaxLimit(String jobsMaxLimit) {
 		this.jobsMaxLimit = jobsMaxLimit;
 	}
 	/**
 	 * @return the jobseekersMaxLimit
 	 */
-	public Integer getJobseekersMaxLimit() {
+	public String getJobseekersMaxLimit() {
 		return jobseekersMaxLimit;
 	}
 	/**
 	 * @param jobseekersMaxLimit the jobseekersMaxLimit to set
 	 */
-	public void setJobseekersMaxLimit(Integer jobseekersMaxLimit) {
+	public void setJobseekersMaxLimit(String jobseekersMaxLimit) {
 		this.jobseekersMaxLimit = jobseekersMaxLimit;
 	}
 	/**
 	 * @return the fee
 	 */
-	public Double getFee() {
+	public String getFee() {
 		return fee;
 	}
 	/**
 	 * @param fee the fee to set
 	 */
-	public void setFee(Double fee) {
+	public void setFee(String fee) {
 		this.fee = fee;
-	}
-	/**
-	 * @return the jobPortalTitle
-	 */
-	public String getJobPortalTitle() {
-		return jobPortalTitle;
-	}
-	/**
-	 * @param jobPortalTitle the jobPortalTitle to set
-	 */
-	public void setJobPortalTitle(String jobPortalTitle) {
-		this.jobPortalTitle = jobPortalTitle;
 	}
 	
 }

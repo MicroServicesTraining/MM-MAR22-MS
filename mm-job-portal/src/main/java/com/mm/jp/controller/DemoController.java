@@ -3,6 +3,8 @@
  */
 package com.mm.jp.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ import com.mm.jp.util.JobPortalPropsUtil;
 @RestController
 @RequestMapping("/demo")
 public class DemoController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DemoController.class);
 	
 	/*@Value("${jobportal.title}")
 	private String jobportalTitle;
@@ -50,6 +54,12 @@ public class DemoController {
 										+ "Job Seekers Max Limit :: " + jobseekersMaxLimit + "<br />"
 												+ "Job Portal Membership Fee :: " + jobportalFee + "</h1>";
 */
+		LOGGER.trace("TRACE log :: Admin Name - " + props.getAdmin());
+		LOGGER.debug("DEBUG log :: Admin Name - " + props.getAdmin() );
+		LOGGER.info("INFO log :: Admin Name - " + props.getAdmin() );
+		LOGGER.warn("WARN log :: Admin Name - " + props.getAdmin() );
+		LOGGER.error("ERROR log :: Admin Name - " + props.getAdmin() );
+		
 		return "<h1>Title :: " + props.getJobPortalTitle() + "<br />"
 		+ "Admin :: " + props.getAdmin() + "<br />"
 				+ "Phone :: " + props.getPhone() + "<br />"
