@@ -39,7 +39,7 @@ public class OAuthGoogleController {
 	}
 
 	@RequestMapping(value = "/user")
-	public Principal user(Principal principal) {
+	public Principal getUserData(Principal principal) {
 		System.out.println("User Name :: " + principal.getName());
 		return principal;
 	}
